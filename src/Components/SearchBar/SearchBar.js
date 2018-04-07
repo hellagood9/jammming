@@ -21,6 +21,8 @@ class SearchBar extends Component {
       localStorage.removeItem('term');
     }
 
+    //this is an update
+
     let result = '';
     if (typeof localStorage.getItem('term') === 'string') {
        result = localStorage.getItem('term').length ? localStorage.getItem('term').replace(new RegExp('"', 'g'), '') : '';
