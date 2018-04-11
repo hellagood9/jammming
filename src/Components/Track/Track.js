@@ -17,6 +17,7 @@ class Track extends Component {
       text = '+';
       handler = this.addTrack;
     }
+
     return (<a className="Track-action" onClick={handler}>{text}</a>);
   }
 

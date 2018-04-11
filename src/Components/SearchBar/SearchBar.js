@@ -9,39 +9,38 @@ class SearchBar extends Component {
     };
     this.search = this.search.bind(this);
     this.handleTermChange = this.handleTermChange.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
   componentDidMount() {
-    this.getTermFromLocaleStorageAndSetItsValueIntoReactState();
-  }
-
-  getTermFromLocaleStorageAndSetItsValueIntoReactState() {
     let accessTokenMatch = window.location.href.match(/access_token=([^&]*)/);
     if (!accessTokenMatch) {
       localStorage.removeItem('term');
+    } else {
+      let termWithoutQuotes = localStorage.getItem('term').replace(new RegExp('"', 'g'), '');
+      this.setState({ term: termWithoutQuotes });
     }
-
-    //this is an update
-
-    let result = '';
-    if (typeof localStorage.getItem('term') === 'string') {
-       result = localStorage.getItem('term').length ? localStorage.getItem('term').replace(new RegExp('"', 'g'), '') : '';
-    }
-
-    this.setState({ term: result });
-  }
-
-  getTermFromReactAndSetIntoLocalStorage() {
-    localStorage.setItem('term', JSON.stringify(this.state.term));
   }
 
   handleTermChange(event) {
     this.setState({ term: event.target.value });
   }
 
+  handleKeyDown(event) {
+    if (event.keyCode === 13) {
+      this.props.onSearch(this.state.term);
+      this.search();
+    }
+  }
+
   search() {
-    this.getTermFromReactAndSetIntoLocalStorage();
+    if (this.state.term === '') {
+      return;
+    }
+
+    localStorage.setItem('term', JSON.stringify(this.state.term));
     this.props.onSearch(this.state.term);
+    this.setState({ term: '' });
   }
 
   render() {
@@ -51,7 +50,7 @@ class SearchBar extends Component {
           value={this.state.term}
           placeholder="Enter A Song, Album, or Artist"
           onChange={this.handleTermChange}
-          ref={node => this.input = node} />
+          onKeyDown={this.handleKeyDown} />
         <a onClick={this.search}>SEARCH</a>
       </div>
     );

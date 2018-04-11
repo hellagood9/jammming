@@ -3,7 +3,6 @@ import './App.css';
 import SearchBar from '../SearchBar/SearchBar';
 import SearchResults from '../SearchResults/SearchResults';
 import PlayList from '../PlayList/PlayList';
-
 import Spotify from '../../util/Spotify';
 
 class App extends Component {
@@ -42,11 +41,12 @@ class App extends Component {
     Spotify.savePlaylist(this.state.playlistName, trackUris)
     .then(() => {
 
-      console.log(`Playlist: ${this.state.playlistName} (${trackUris.length} song/s) saved!`);
+      alert(`Playlist '${this.state.playlistName}' created: (${trackUris.length} song/s) saved!`);
 
       this.setState({
         searchResults: [],
         playlistName: 'New Playlist',
+        playlistTracks: [],
       });
     });
   }

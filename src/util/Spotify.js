@@ -2,7 +2,7 @@ import variables from '../variables';
 
 /*
 Use your own credentials as follows:
-const clientId = '9cc105d6011643f08d035bf70b62185a';
+const clientId = 'xxx';
 const redirectUriDev = 'http://localhost:3000/';
 const redirectUriProd = 'https://jammmingwithmax.surge.sh/';
 */
