@@ -27,6 +27,10 @@ class SearchBar extends Component {
   }
 
   handleKeyDown(event) {
+    if (this.state.term === '') {
+      return;
+    }
+
     if (event.keyCode === 13) {
       this.props.onSearch(this.state.term);
       this.search();
